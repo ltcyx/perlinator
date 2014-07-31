@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\PerlinClientBehaviour.cs">
+    <Files>
+      <File FileName="Assets\scripts\perlin\NoiseMatrix3.cs" Line="11" Column="32" />
+      <File FileName="Assets\scripts\perlin\SmoothNoiseMatrix3.cs" Line="46" Column="2" />
+      <File FileName="Assets\scripts\perlin\Interpolator.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\perlin\LinearInterpolator.cs" Line="7" Column="41" />
+      <File FileName="Assets\scripts\perlin\PerlinNoise.cs" Line="15" Column="20" />
+      <File FileName="Assets\scripts\PerlinClientBehaviour.cs" Line="22" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
