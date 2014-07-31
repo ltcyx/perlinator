@@ -44,6 +44,10 @@ public class SmoothNoiseMatrix3 {
 	}
 
 	public double getValue(double x, double y, double z) {
+		return getRawValue(x*matrix.sizex, y*matrix.sizey, z*matrix.sizez);
+	}
+
+	public double getRawValue(double x, double y, double z) {
 
 		InterpolationValue ix = InterpolationValue.NewFromValue(x);
 		InterpolationValue iy = InterpolationValue.NewFromValue(y);

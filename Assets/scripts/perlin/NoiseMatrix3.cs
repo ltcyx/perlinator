@@ -32,4 +32,22 @@ public class NoiseMatrix3 {
 		return values[wrapValue(x, values.GetLength(0)), wrapValue(y, values.GetLength(1)), wrapValue(z, values.GetLength(2))];
 	}
 
+	public int sizex {
+		get {
+			return values.GetLength(0);
+		}
+	}
+
+	public int sizey {
+		get {
+			return values.GetLength(1);
+		}
+	}
+
+	public int sizez {
+		get {
+			return values.GetLength(2);
+		}
+	}
+
 }
