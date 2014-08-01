@@ -191,8 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depth: 0
   depthSpeed: 0
-  octaves: 1
-  textureScale: 1
+  octaves: 4
+  textureScale: .10000000149011612
   updateTexture: 1
 --- !u!64 &2102543136
 MeshCollider:

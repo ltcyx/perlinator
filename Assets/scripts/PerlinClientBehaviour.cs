@@ -14,7 +14,7 @@ public class PerlinClientBehaviour : MonoBehaviour {
 	public bool updateTexture = false;
 
 	void Start () {
-		perlin = new PerlinNoise(new SmoothNoiseMatrix3(new NoiseMatrix3(32,1), new CosineInterpolator()), 1);
+		perlin = new PerlinNoise(new SmoothNoiseMatrix3(new NoiseMatrix3(32,1), new CosineInterpolator()), 1, 0.5, 2);
 		tex = new Texture2D(256, 256);
 		renderer.sharedMaterial.mainTexture = tex;
 		UpdateTexture();

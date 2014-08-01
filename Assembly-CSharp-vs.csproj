@@ -46,6 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\scripts\Marcelo\PerlinGlDrawer.cs" />
+     <Compile Include="Assets\scripts\Marcelo\PerlinMapGenerator.cs" />
+     <Compile Include="Assets\scripts\Marcelo\PerlinTexture.cs" />
+     <Compile Include="Assets\scripts\Marcelo\RotateObject.cs" />
      <Compile Include="Assets\scripts\PerlinClientBehaviour.cs" />
      <Compile Include="Assets\scripts\PerlinQuadsTerrainBehaviour.cs" />
      <Compile Include="Assets\scripts\perlin\CosineInterpolator.cs" />

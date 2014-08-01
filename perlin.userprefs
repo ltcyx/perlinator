@@ -6,10 +6,10 @@
       <File FileName="Assets\scripts\perlin\SmoothNoiseMatrix3.cs" Line="48" Column="3" />
       <File FileName="Assets\scripts\perlin\Interpolator.cs" Line="5" Column="1" />
       <File FileName="Assets\scripts\perlin\LinearInterpolator.cs" Line="4" Column="33" />
-      <File FileName="Assets\scripts\perlin\PerlinNoise.cs" Line="15" Column="1" />
-      <File FileName="Assets\scripts\PerlinClientBehaviour.cs" Line="18" Column="33" />
-      <File FileName="Assets\scripts\perlin\CosineInterpolator.cs" Line="6" Column="1" />
-      <File FileName="Assets\scripts\PerlinQuadsTerrainBehaviour.cs" Line="81" Column="69" />
+      <File FileName="Assets\scripts\perlin\PerlinNoise.cs" Line="33" Column="80" />
+      <File FileName="Assets\scripts\PerlinClientBehaviour.cs" Line="35" Column="4" />
+      <File FileName="Assets\scripts\perlin\CosineInterpolator.cs" Line="10" Column="3" />
+      <File FileName="Assets\scripts\PerlinQuadsTerrainBehaviour.cs" Line="13" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
