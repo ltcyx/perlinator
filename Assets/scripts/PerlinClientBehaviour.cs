@@ -22,19 +22,23 @@ public class PerlinClientBehaviour : MonoBehaviour {
 
 	private void UpdateTexture() {
 		perlin.Octaves = octaves;
+		double highestVal = 0;
 		for (int i=0; i<tex.width; ++i) {
 			double x = (double)i/(double)tex.width;
 			for (int j=0; j<tex.height; ++j) {
 				double y = (double)j/(double)tex.height;
-				Color col = getColorForValue(perlin.getValue(x * textureScale, y * textureScale, depth));
+				double val = perlin.getValue(x * textureScale, y * textureScale, depth);
+				if (val > highestVal) highestVal = val;
+				Color col = getColourForValue(val);
 				tex.SetPixel(i, j, col);
 			}
 		}
 		tex.Apply();
 		renderer.sharedMaterial.mainTexture = tex;
+		Debug.Log("highest value: "+highestVal);
 	}
 
-	private Color getColorForValue(double val) {
+	private Color getColourForValue(double val) {
 		return new Color((float)val, (float)val, (float)val);
 	}
 

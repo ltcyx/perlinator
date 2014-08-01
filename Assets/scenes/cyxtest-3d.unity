@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: .0010000000474974513
-  chunkMaterial: {fileID: 2100000, guid: 2f12c1999dc8e7b40b1f4365d1fa37ba, type: 2}
+  chunkMaterial: {fileID: 2100000, guid: 4a92c4423c13fda42901456d5644c733, type: 2}
 --- !u!1 &1199555761
 GameObject:
   m_ObjectHideFlags: 0

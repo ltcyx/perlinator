@@ -14,10 +14,10 @@ public class PerlinQuadsTerrainBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		perlin = new PerlinNoise(new SmoothNoiseMatrix3(new NoiseMatrix3(64, 0), new LinearInterpolator()), 1);
+		perlin = new PerlinNoise(new SmoothNoiseMatrix3(new NoiseMatrix3(64, 2), new CosineInterpolator()), 1, 0.3, 4);
 
-		for (int ix=0; ix<16; ++ix) {
-			for (int iz=0; iz<16; ++iz) {
+		for (int ix=0; ix<32; ++ix) {
+			for (int iz=0; iz<32; ++iz) {
 				generateChunk(ix, iz);
 			}
 		}
@@ -54,9 +54,9 @@ public class PerlinQuadsTerrainBehaviour : MonoBehaviour {
 
 					double pv = perlin.getValue(px*scale, py*scale, pz*scale);
 					//Debug.Log("pv = "+pv);
-					int perlinVal = (int)(pv * 32) + (seaLevel - iy);
+					int perlinVal = (int)(pv * 64) + (seaLevel - iy);
 
-					if (perlinVal > 16) {
+					if (perlinVal > 32) {
 
 						Vector3 v000 = new Vector3(ix + 0, iy + 0, iz + 0);
 						Vector3 v001 = new Vector3(ix + 0, iy + 0, iz + 1);
