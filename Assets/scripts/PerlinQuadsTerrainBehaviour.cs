@@ -34,10 +34,11 @@ public class PerlinQuadsTerrainBehaviour : MonoBehaviour {
 	}
 
 	private void generateChunk(int x, int z) {
-		GameObject chunk = new GameObject("chunk"+x+"-"+z);
-		chunk.AddComponent<MeshFilter>();
-		chunk.AddComponent<MeshRenderer>();
-		chunk.GetComponent<MeshRenderer>().sharedMaterial = chunkMaterial;
+		var chunk = new GameObject("chunk"+x+"-"+z);
+        var meshFilter = chunk.AddComponent<MeshFilter>();
+        var meshCollider = chunk.AddComponent<MeshCollider>();
+		var meshRenderer = chunk.AddComponent<MeshRenderer>();
+		meshRenderer.sharedMaterial = chunkMaterial;
 		chunk.transform.position = new Vector3(x*chunkSize, 0, z*chunkSize);
 		chunk.transform.parent = this.transform;
 
@@ -119,11 +120,10 @@ public class PerlinQuadsTerrainBehaviour : MonoBehaviour {
 			}
 		}
 
-		MeshFilter meshfilter = chunk.GetComponent<MeshFilter>();
-		Mesh mesh = meshfilter.sharedMesh;
+		var mesh = meshFilter.sharedMesh;
 		if (mesh==null) {
-			meshfilter.mesh = new Mesh();
-			mesh = meshfilter.sharedMesh;
+			meshFilter.mesh = new Mesh();
+			mesh = meshFilter.sharedMesh;
 		}
 
 		Debug.Log("size of verts: "+verts.Count);
@@ -136,6 +136,8 @@ public class PerlinQuadsTerrainBehaviour : MonoBehaviour {
 
 		mesh.RecalculateBounds();
 		mesh.Optimize();
+
+        meshCollider.sharedMesh = mesh;
 	}
 
     private double getPerlinValue(int x, int y, int z)
