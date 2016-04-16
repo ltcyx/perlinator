@@ -16,7 +16,7 @@ public class PerlinClientBehaviour : MonoBehaviour {
 	void Start () {
 		perlin = new PerlinNoise(new SmoothNoiseMatrix3(new NoiseMatrix3(32,1), new CosineInterpolator()), 1, 0.5, 2);
 		tex = new Texture2D(256, 256);
-		renderer.sharedMaterial.mainTexture = tex;
+		GetComponent<Renderer>().sharedMaterial.mainTexture = tex;
 		UpdateTexture();
 	}
 
@@ -34,7 +34,7 @@ public class PerlinClientBehaviour : MonoBehaviour {
 			}
 		}
 		tex.Apply();
-		renderer.sharedMaterial.mainTexture = tex;
+		GetComponent<Renderer>().sharedMaterial.mainTexture = tex;
 		Debug.Log("highest value: "+highestVal);
 	}
 

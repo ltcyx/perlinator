@@ -27,9 +27,9 @@ public class PerlinMapGenerator : MonoBehaviour
 
 		PerlinTexture.SetColorGradient(color);
 
-		this.gameObject.renderer.sharedMaterial.mainTexture = PerlinTexture.CreatePerlinNoise(sizeX, sizeY, octaves);
-		sphere.renderer.material.mainTexture = this.gameObject.renderer.sharedMaterial.mainTexture;
-		sphere.renderer.material.SetTexture("_BumpMap",sphere.renderer.material.mainTexture);
+		this.gameObject.GetComponent<Renderer>().sharedMaterial.mainTexture = PerlinTexture.CreatePerlinNoise(sizeX, sizeY, octaves);
+		sphere.GetComponent<Renderer>().material.mainTexture = this.gameObject.GetComponent<Renderer>().sharedMaterial.mainTexture;
+		sphere.GetComponent<Renderer>().material.SetTexture("_BumpMap",sphere.GetComponent<Renderer>().material.mainTexture);
 	}
 	
 	// Update is called once per frame
@@ -54,9 +54,9 @@ public class PerlinMapGenerator : MonoBehaviour
 
 			PerlinTexture.SetColorGradient(color);
 			
-			this.gameObject.renderer.sharedMaterial.mainTexture = PerlinTexture.CreatePerlinNoise(sizeX, sizeY, octaves);
-			sphere.renderer.material.mainTexture = this.gameObject.renderer.sharedMaterial.mainTexture;
-			sphere.renderer.material.SetTexture("_NormalMap",sphere.renderer.material.mainTexture);
+			this.gameObject.GetComponent<Renderer>().sharedMaterial.mainTexture = PerlinTexture.CreatePerlinNoise(sizeX, sizeY, octaves);
+			sphere.GetComponent<Renderer>().material.mainTexture = this.gameObject.GetComponent<Renderer>().sharedMaterial.mainTexture;
+			sphere.GetComponent<Renderer>().material.SetTexture("_NormalMap",sphere.GetComponent<Renderer>().material.mainTexture);
 		}
 	}
 

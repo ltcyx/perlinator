@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class NoiseMatrix3 {
 
@@ -23,13 +24,23 @@ public class NoiseMatrix3 {
 	private int wrapValue(int value, int max) {
 		value = value % max;
 		while(value<0) {
-			value = max - value;
+			value += max;
 		}
 		return value;
 	}
 
 	public double getValue(int x, int y, int z) {
-		return values[wrapValue(x, values.GetLength(0)), wrapValue(y, values.GetLength(1)), wrapValue(z, values.GetLength(2))];
+        int wx = wrapValue(x, values.GetLength(0));
+        int wy = wrapValue(y, values.GetLength(1));
+        int wz = wrapValue(z, values.GetLength(2));
+        try
+        {
+            return values[wx, wy, wz];
+        } catch (Exception e)
+        {
+            Debug.LogError(string.Format("Exception reading value for [{0}, {1}, {2}] size: ({3}, {4}, {5}): {6}", wx, wy, wz, values.GetLength(0), values.GetLength(1), values.GetLength(2), e));
+            throw e;
+        }
 	}
 
 	public int sizex {
