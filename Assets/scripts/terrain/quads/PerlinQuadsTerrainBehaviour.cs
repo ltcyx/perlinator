@@ -21,28 +21,55 @@ namespace Assets.scripts.terrain.quads
 
         private int WorldHeightOffset = 64;
 
-        private int InitialGenerationSize = 64;
+        private int InitialGenerationSize = 17;
 
         private Dictionary<string, TerrainChunk> Chunks;
 
-        // Use this for initialization
         IEnumerator Start()
         {
             var tm = ThreadManager.Instance;
+            //wait a frame to give ThreadManager a chance to initialize background threads
             yield return null;
 
-            Perlin = new PerlinNoise(new SmoothNoiseMatrix3(new NoiseMatrix3(64, 2), new LinearInterpolator()), 1, 0.3, 4);
             Chunks = new Dictionary<string, TerrainChunk>();
 
-            for (int ix = 0; ix < InitialGenerationSize; ++ix)
+            //generateChunks(-InitialGenerationSize / 2, -InitialGenerationSize / 2, InitialGenerationSize / 2, InitialGenerationSize / 2);
+            generateChunksSpiral(0, 0, InitialGenerationSize / 2);
+        }
+
+        private void generateChunksSpiral(int x, int z, int radius)
+        {
+            for (int r = 0; r <= radius; ++r)
             {
-                for (int iz = 0; iz < InitialGenerationSize; ++iz)
+                if (r == 0)
+                {
+                    generateChunk(x, z);
+                } else
+                {
+                    for (var ir = -r; ir < r; ++ir)
+                    {
+                        //left
+                        generateChunk(x - r, z + ir);
+                        //bottom
+                        generateChunk(x + ir, z + r);
+                        //right
+                        generateChunk(x + r, z - ir);
+                        //top
+                        generateChunk(x - ir, z - r);
+                    }
+                }
+            }
+        }
+
+        private void generateChunks(int sx, int sz, int ex, int ez)
+        {
+            for (int ix = sx; ix < ex; ++ix)
+            {
+                for (int iz = sz; iz < ez; ++iz)
                 {
                     generateChunk(ix, iz);
                 }
-                //yield return null;
             }
-            yield return null;
         }
 
         private void generateChunk(int x, int z)
@@ -94,10 +121,5 @@ namespace Assets.scripts.terrain.quads
             return Perlin.getValue(x * scale, y * verticalScale, z * scale);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

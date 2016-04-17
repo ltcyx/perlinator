@@ -12,52 +12,66 @@ namespace Assets.scripts.util
     {
         public static ThreadManager Instance = new ThreadManager();
 
-        private Thread WorkerThread { get; set; }
+        private const int BackgroundThreadCount = 6;
+
+        private List<Thread> WorkerThreads { get; set; }
         private AutoResetEvent WorkReadyEvent { get; set; }
 
         private Queue<Action> BackgroundWork { get; set; }
-        private Queue<Action> AvailableJobs { get; set; }
 
         private ThreadManagerHost Host { get; set; }
+
+        private bool RunThreads { get; set; }
 
         private ThreadManager()
         {
             WorkReadyEvent = new AutoResetEvent(false);
             BackgroundWork = new Queue<Action>();
+            WorkerThreads = new List<Thread>();
+            RunThreads = true;
 
             Host = new GameObject("ThreadManagerHost").AddComponent<ThreadManagerHost>();
 
-            WorkerThread = new Thread(DoBackgroundWork);
-            WorkerThread.Start();
+            for (int i=0; i<BackgroundThreadCount; ++i)
+            {
+                var workerThread = new Thread(ConsumeWork);
+                WorkerThreads.Add(workerThread);
+                workerThread.Start();
+            }
         }
 
-        private void DoBackgroundWork()
+        private void ConsumeWork()
         {
-            AvailableJobs = new Queue<Action>();
-            while(true)
+            Action currentJob = null;
+            while(RunThreads)
             {
                 try
                 {
-                    WorkReadyEvent.WaitOne();
 
                     lock (BackgroundWork)
                     {
-                        while (BackgroundWork.Count > 0)
+                        if (BackgroundWork.Count > 0)
                         {
-                            AvailableJobs.Enqueue(BackgroundWork.Dequeue());
+                            currentJob = BackgroundWork.Dequeue();
                         }
                     }
-                    while (AvailableJobs.Count > 0)
+
+                    if (currentJob == null)
+                    {
+                        //nothing to process, let's wait a bit
+                        WorkReadyEvent.WaitOne();
+                    }
+                    else
                     {
                         try
                         {
-                            var job = AvailableJobs.Dequeue();
-                            job();
+                            currentJob();
                         }
                         catch (Exception e)
                         {
                             ExecuteInMainThread(() => { Debug.LogError("Error in background thread: " + e); });
                         }
+                        currentJob = null;
                     }
                 }
                 catch (Exception e)
@@ -65,6 +79,11 @@ namespace Assets.scripts.util
                     ExecuteInMainThread(() => { Debug.LogError("Error running background job thread: " + e); });
                 }
             }
+        }
+
+        public void AbortThreads()
+        {
+            RunThreads = false;
         }
 
         public void ExecuteInBackground(Action job)
@@ -91,7 +110,7 @@ namespace Assets.scripts.util
 
         public int GetBackgroundJobsCount()
         {
-            return BackgroundWork.Count + AvailableJobs.Count;
+            return BackgroundWork.Count;
         }
 
         public void ExecuteInMainThread(Action job)
@@ -177,7 +196,12 @@ namespace Assets.scripts.util
             
             void OnGUI()
             {
-                GUI.Label(new Rect(0, 0, 100, 100), ""+ThreadManager.Instance.GetBackgroundJobsCount());
+                GUI.Label(new Rect(0, 0, 100, 100), string.Format("{0}, {1}", ThreadManager.Instance.GetBackgroundJobsCount(), JobQueue.Count()));
+            }
+
+            void OnDisable()
+            {
+                ThreadManager.Instance.AbortThreads();
             }
             
         }
