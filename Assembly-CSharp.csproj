@@ -38,10 +38,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>f:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>F:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>f:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>F:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -50,13 +50,16 @@
      <Compile Include="Assets\scripts\Marcelo\PerlinTexture.cs" />
      <Compile Include="Assets\scripts\Marcelo\RotateObject.cs" />
      <Compile Include="Assets\scripts\PerlinClientBehaviour.cs" />
-     <Compile Include="Assets\scripts\PerlinQuadsTerrainBehaviour.cs" />
      <Compile Include="Assets\scripts\perlin\CosineInterpolator.cs" />
      <Compile Include="Assets\scripts\perlin\Interpolator.cs" />
      <Compile Include="Assets\scripts\perlin\LinearInterpolator.cs" />
      <Compile Include="Assets\scripts\perlin\NoiseMatrix3.cs" />
      <Compile Include="Assets\scripts\perlin\PerlinNoise.cs" />
      <Compile Include="Assets\scripts\perlin\SmoothNoiseMatrix3.cs" />
+     <Compile Include="Assets\scripts\terrain\Direction.cs" />
+     <Compile Include="Assets\scripts\terrain\quads\PerlinQuadsTerrainBehaviour.cs" />
+     <Compile Include="Assets\scripts\terrain\quads\TerrainChunk.cs" />
+     <Compile Include="Assets\scripts\util\ThreadManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>f:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
