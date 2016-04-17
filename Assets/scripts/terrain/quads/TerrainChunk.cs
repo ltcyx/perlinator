@@ -35,8 +35,6 @@ namespace Assets.scripts.terrain.quads
             Vector3 ntop = new Vector3(0, 1, 0);
             Vector3 nbottom = new Vector3(0, -1, 0);
 
-            Vector2 uv = new Vector2(0, 0);
-
             for (int ix = 0; ix < ChunkSize; ++ix)
             {
                 for (int iz = 0; iz < ChunkSize; ++iz)
@@ -57,41 +55,43 @@ namespace Assets.scripts.terrain.quads
                             Vector3 v110 = new Vector3(ix + 1, iy + 1, iz + 0);
                             Vector3 v111 = new Vector3(ix + 1, iy + 1, iz + 1);
 
+                            var buvs = getUVsForBlockFaces(0);
+
                             //front
                             if (!isNeighborBlockOpaque(ix, iy, iz, Direction.Front))
                             {
-                                this.newTriForBlockMesh(v000, v010, v110, nfront, uv, uv, uv, verts, norms, uvs, tris);
-                                this.newTriForBlockMesh(v110, v100, v000, nfront, uv, uv, uv, verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v000, v010, v110, nfront, buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 1], buvs[(int)Direction.Front, 3], verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v110, v100, v000, nfront, buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 2], buvs[(int)Direction.Front, 0], verts, norms, uvs, tris);
                             }
                             //back
                             if (!isNeighborBlockOpaque(ix, iy, iz, Direction.Back))
                             {
-                                this.newTriForBlockMesh(v001, v111, v011, nback, uv, uv, uv, verts, norms, uvs, tris);
-                                this.newTriForBlockMesh(v111, v001, v101, nback, uv, uv, uv, verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v001, v111, v011, nback, buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 1], verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v111, v001, v101, nback, buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 2], verts, norms, uvs, tris);
                             }
                             //left
                             if (!isNeighborBlockOpaque(ix, iy, iz, Direction.Left))
                             {
-                                this.newTriForBlockMesh(v000, v001, v011, nleft, uv, uv, uv, verts, norms, uvs, tris);
-                                this.newTriForBlockMesh(v011, v010, v000, nleft, uv, uv, uv, verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v000, v001, v011, nleft, buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 1], buvs[(int)Direction.Front, 3], verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v011, v010, v000, nleft, buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 2], buvs[(int)Direction.Front, 0], verts, norms, uvs, tris);
                             }
                             //right
                             if (!isNeighborBlockOpaque(ix, iy, iz, Direction.Right))
                             {
-                                this.newTriForBlockMesh(v100, v111, v101, nright, uv, uv, uv, verts, norms, uvs, tris);
-                                this.newTriForBlockMesh(v111, v100, v110, nright, uv, uv, uv, verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v100, v111, v101, nright, buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 1], verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v111, v100, v110, nright, buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 2], verts, norms, uvs, tris);
                             }
                             //top
                             if (!isNeighborBlockOpaque(ix, iy, iz, Direction.Up))
                             {
-                                this.newTriForBlockMesh(v010, v011, v111, ntop, uv, uv, uv, verts, norms, uvs, tris);
-                                this.newTriForBlockMesh(v111, v110, v010, ntop, uv, uv, uv, verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v010, v011, v111, ntop, buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 1], buvs[(int)Direction.Front, 3], verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v111, v110, v010, ntop, buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 2], buvs[(int)Direction.Front, 0], verts, norms, uvs, tris);
                             }
                             //bottom
                             if (!isNeighborBlockOpaque(ix, iy, iz, Direction.Down))
                             {
-                                this.newTriForBlockMesh(v000, v101, v001, nbottom, uv, uv, uv, verts, norms, uvs, tris);
-                                this.newTriForBlockMesh(v101, v000, v100, nbottom, uv, uv, uv, verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v000, v101, v001, nbottom, buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 1], verts, norms, uvs, tris);
+                                this.newTriForBlockMesh(v101, v000, v100, nbottom, buvs[(int)Direction.Front, 3], buvs[(int)Direction.Front, 0], buvs[(int)Direction.Front, 2], verts, norms, uvs, tris);
                             }
                         }
                         else
@@ -197,6 +197,36 @@ namespace Assets.scripts.terrain.quads
             }
             
             return isBlockOpaque(tx, ty, tz);
+        }
+
+        private Vector2[,] getUVsForBlockFaces(int blockType)
+        {
+            var blockHeight = 0.25f;
+            var blockWidth = 0.25f;
+
+            var result = new Vector2[6, 4];
+            var baseUV = new Vector2(0, 1-blockType * blockHeight);
+            for (int i=0; i<6; ++i)
+            {
+                var xOffset = 0f;
+                switch ((Direction)i)
+                {
+                    case Direction.Up:
+                        xOffset = 0;
+                        break;
+                    case Direction.Down:
+                        xOffset = blockWidth;
+                        break;
+                    default:
+                        xOffset = 2 * blockWidth;
+                        break;
+                }
+                result[i, 0] = baseUV + new Vector2(xOffset, 0);
+                result[i, 1] = baseUV + new Vector2(xOffset, -blockHeight);
+                result[i, 2] = baseUV + new Vector2(xOffset + blockWidth, 0);
+                result[i, 3] = baseUV + new Vector2(xOffset + blockWidth, -blockHeight);
+            }
+            return result;
         }
 
         private void newTriForBlockMesh(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 normal, Vector3 uv0, Vector3 uv1, Vector3 uv2, List<Vector3> verts, List<Vector3> norms, List<Vector2> uvs, List<int> tris)
