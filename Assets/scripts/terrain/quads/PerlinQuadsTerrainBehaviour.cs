@@ -31,6 +31,7 @@ namespace Assets.scripts.terrain.quads
             //wait a frame to give ThreadManager a chance to initialize background threads
             yield return null;
 
+            Perlin = new PerlinNoise(new SmoothNoiseMatrix3(new NoiseMatrix3(64, 2), new CosineInterpolator()), 2, 0.3, 4);
             Chunks = new Dictionary<string, TerrainChunk>();
 
             //generateChunks(-InitialGenerationSize / 2, -InitialGenerationSize / 2, InitialGenerationSize / 2, InitialGenerationSize / 2);
